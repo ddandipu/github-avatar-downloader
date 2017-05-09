@@ -27,15 +27,9 @@ function getRepoContributors(repoOwner, repoName, cb){
              content = JSON.parse(data);
              for (var i=0; i < content.length; i++) {
              let thePictures = content[i].avatar_url;
-             let theFolder = './profilePic/'
-             request.get(thePictures)
-               .on('error', function (err) {                                   // Note 2
-                 throw err;
-                })
-              .on('response', function (response) {                           // Note 3
-                 console.log('Response Status Code: ', response.statusCode);
-                })
-              .pipe(fs.createWriteStream(theFolder +'image' + i + '.jpg'))
+             let theFolder = './profilePic/' + content[i].login + '.jpg';
+             downloadImageByURL(thePictures, theFolder);
+
            }
         })
 
@@ -45,17 +39,14 @@ function getRepoContributors(repoOwner, repoName, cb){
         }
 
 function downloadImageByURL(url, filePath) {
-  for (var i=0; i < content.length; i++) {
-    request.get(content[i].avatar_url)
+    request.get(url)
     .on('error', function (err) {                                   // Note 2
       throw err;
     })
     .on('response', function (response) {                           // Note 3
-      console.log('Response Status Code: ', response.statusCode);
     })
-    .pipe(fs.createWriteStream('./avatar/image' + i + '.jpg'))
+    .pipe(fs.createWriteStream(filePath))
   }
-}
 
 
 getRepoContributors("jquery", "jquery", function(err, result) {
