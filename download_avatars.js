@@ -27,6 +27,7 @@ function getRepoContributors(repoOwner, repoName, cb){
              content = JSON.parse(data);
              for (var i=0; i < content.length; i++) {
              let thePictures = content[i].avatar_url;
+             let theFolder = './profilePic/'
              request.get(thePictures)
                .on('error', function (err) {                                   // Note 2
                  throw err;
@@ -34,7 +35,7 @@ function getRepoContributors(repoOwner, repoName, cb){
               .on('response', function (response) {                           // Note 3
                  console.log('Response Status Code: ', response.statusCode);
                 })
-              .pipe(fs.createWriteStream('./avatar/image' + i + '.jpg'))
+              .pipe(fs.createWriteStream(theFolder +'image' + i + '.jpg'))
            }
         })
 
