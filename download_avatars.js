@@ -4,9 +4,9 @@ console.log('Welcome to the Github Avatar Downloader');
 var GITHUB_USER = "ddandipu";
 var GITHUB_TOKEN = "8842a1d546871d6c1ece390908d08fdfeab049ab";
 var args = process.argv.slice(2);
-
-
 function getRepoContributors(repoOwner, repoName, cb){
+
+
   if (!repoOwner || !repoName) {
     console.log("Two arguments please: repo owner and repo name");
   } else {
