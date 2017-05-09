@@ -3,7 +3,7 @@ var fs = require('fs')
 console.log('Welcome to the Github Avatar Downloader');
 var GITHUB_USER = "ddandipu";
 var GITHUB_TOKEN = "8842a1d546871d6c1ece390908d08fdfeab049ab";
-
+var args = process.argv.slice(2);
 
 function getRepoContributors(repoOwner, repoName, cb){
   var requestURL = 'https://' + GITHUB_USER+':'+ GITHUB_TOKEN + '@api.github.com/repos/' + repoOwner +'/' + repoName +'/contributors';
@@ -49,7 +49,7 @@ function downloadImageByURL(url, filePath) {
   }
 
 
-getRepoContributors("jquery", "jquery", function(err, result) {
+getRepoContributors(args[0], args[1], function(err, result) {
   console.log("Errors:", err);
   console.log("Result:", result);
 });
