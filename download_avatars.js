@@ -26,8 +26,8 @@ function getRepoContributors(repoOwner, repoName, cb){
           }
              content = JSON.parse(data);
              for (var i=0; i < content.length; i++) {
-
-             request.get(content[i].avatar_url)
+             let thePictures = content[i].avatar_url;
+             request.get(thePictures)
                .on('error', function (err) {                                   // Note 2
                  throw err;
                 })
@@ -43,6 +43,18 @@ function getRepoContributors(repoOwner, repoName, cb){
         });
         }
 
+function downloadImageByURL(url, filePath) {
+  for (var i=0; i < content.length; i++) {
+    request.get(content[i].avatar_url)
+    .on('error', function (err) {                                   // Note 2
+      throw err;
+    })
+    .on('response', function (response) {                           // Note 3
+      console.log('Response Status Code: ', response.statusCode);
+    })
+    .pipe(fs.createWriteStream('./avatar/image' + i + '.jpg'))
+  }
+}
 
 
 getRepoContributors("jquery", "jquery", function(err, result) {
