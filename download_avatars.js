@@ -16,32 +16,28 @@ function getRepoContributors(repoOwner, repoName, cb){
       headers: {"User-Agent": "lighthouse student project"}
     };
     request.get(requestObj)               // Note 1
-         .on('error', function (err) {                                   // Note 2
+      .on('error', function (err) {                                   // Note 2
            throw err;
-         })
-         .on('response', function (response) {                           // Note 3
+      })
+      .on('response', function (response) {                           // Note 3
            console.log('Response Status Code: ', response.statusCode);
-         })
-         .pipe(fs.createWriteStream('./downloaded.JSON'))
-         .on('finish', function() {
-          fs.readFile('./downloaded.JSON', function read(err, data) {
-            if (err) {
-            throw err;
-            }
-               content = JSON.parse(data);
-               for (var i=0; i < content.length; i++) {
-               let thePictures = content[i].avatar_url;
-               let theFolder = './profilePic/' + content[i].login + '.jpg';
-               downloadImageByURL(thePictures, theFolder);
-
-             }
-          })
-
-      // Invoke the next step here however you like
-     // Put all of the code here (not the best solution)         // Or put the next step in a function and invoke it
-          });
-       }
-    }
+      })
+      .pipe(fs.createWriteStream('./downloaded.JSON'))
+      .on('finish', function() {
+        fs.readFile('./downloaded.JSON', function read(err, data) {
+        if (err) {
+          throw err;
+        }
+          content = JSON.parse(data);
+          for (var i=0; i < content.length; i++) {
+          let thePictures = content[i].avatar_url;
+          let theFolder = './profilePic/' + content[i].login + '.jpg';
+          downloadImageByURL(thePictures, theFolder);
+          }
+        })
+      });
+  }
+}
 
 function downloadImageByURL(url, filePath) {
     request.get(url)
@@ -51,7 +47,7 @@ function downloadImageByURL(url, filePath) {
     .on('response', function (response) {                           // Note 3
     })
     .pipe(fs.createWriteStream(filePath))
-  }
+}
 
 
 getRepoContributors(args[0], args[1], function(err, result) {
